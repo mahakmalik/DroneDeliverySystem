@@ -5,18 +5,17 @@ public class OrderScheduler{
 	private static LocalTime dispatchTime;
 	private LocalTime deliveryTime;
 	private LocalTime returnTime;
-	private  ArrayList<OrderDetails> custOrderDetails;
-	private  ArrayList<OrderDetails> sortedTripOrderDetails;
+	private  ArrayList<OrderDetails> OrderDetails = new ArrayList<OrderDetails>();
+	private  ArrayList<OrderDetails> sortedDetails = new ArrayList<OrderDetails>();;
 	
 	//to get the order list created while processing the input file
 	
 	OrderScheduler(ArrayList<OrderDetails> sortedTripOrderDetails , ArrayList<OrderDetails> custOrderDetails ) {
 		
-		sortedTripOrderDetails = new ArrayList<OrderDetails>();  
-		  this.sortedTripOrderDetails.addAll(sortedTripOrderDetails);
 		  
-		  custOrderDetails = new ArrayList<OrderDetails>();  
-		  this.sortedTripOrderDetails.addAll(custOrderDetails); 
+		  this.sortedDetails.addAll(sortedTripOrderDetails);
+		  	   
+		  this.OrderDetails.addAll(custOrderDetails); 
 		
 	}
 	//to get the order list created while processing the input file
@@ -26,11 +25,9 @@ public class OrderScheduler{
 		
 		OrderDetails order = selectNextOrder(currDispatchTime);
 		
-		int len=custOrderDetails.size();
+		int len=OrderDetails.size();
 		
 			for(int i=0;i<len-1;i++) {	
-				
-				System.out.println("for");
 				
 				if(order.getOrderPlaceTime().isAfter(currDispatchTime)) {	
 					
@@ -48,10 +45,10 @@ public class OrderScheduler{
 			
 			currDispatchTime = returnTime;
 			
-			System.out.println(order.getOrderId());
+			//System.out.println(order.getOrderId() + " "+ deliveryTime + " "+returnTime);
 			
-			sortedTripOrderDetails.remove(order);
-			custOrderDetails.remove(order);
+			sortedDetails.remove(order);
+			OrderDetails.remove(order);
 			
 			order = selectNextOrder(currDispatchTime);
 						
@@ -66,15 +63,14 @@ public class OrderScheduler{
 	public OrderDetails selectNextOrder(LocalTime currentDispatchTime) {
 		
 		
-		OrderDetails order = sortedTripOrderDetails.stream()
+		OrderDetails order = sortedDetails.stream()
 				.filter(o->currentDispatchTime.isAfter(o.getOrderPlaceTime()) || currentDispatchTime.equals(o.getOrderPlaceTime()))
 				.findAny()
 				.orElse(null);
-		
-
+			
 		//get the order with the earliest order place time if no orders were found
-		if (order == null && !custOrderDetails.isEmpty()) {
-			order = custOrderDetails.get(0);
+		if (order == null && !OrderDetails.isEmpty()) {
+			order = OrderDetails.get(0);
 		}
 		
 		return order;
@@ -84,20 +80,20 @@ public class OrderScheduler{
 	}
 
 
-	public LocalTime getDeliveryTime(OrderDetails prevOrder, LocalTime currDispatchTime) {
+	public LocalTime getDeliveryTime(OrderDetails Order, LocalTime currDispatchTime) {
 			
-			int minutes = (int) (prevOrder.getRoundTripTime()/2);
-			
-			deliveryTime = currDispatchTime.plusMinutes(minutes) ;
+			int minutes = (int) (Order.getRoundTripTime()/2);
 		
+			deliveryTime = currDispatchTime.plusMinutes(minutes) ;
+			
 		return deliveryTime;
 
 
 	}
 
-	public LocalTime getReturnTime(OrderDetails prevOrder, LocalTime currDispatchTime) {
+	public LocalTime getReturnTime(OrderDetails Order, LocalTime currDispatchTime) {
 		
-		int minutes = (int) (prevOrder.getRoundTripTime());
+		int minutes = (int) (Order.getRoundTripTime());
 		
 		returnTime = currDispatchTime.plusMinutes(minutes) ;
 	

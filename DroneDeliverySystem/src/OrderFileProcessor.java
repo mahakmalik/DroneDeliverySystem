@@ -18,7 +18,7 @@ public class OrderFileProcessor {
 
 	private  ArrayList<OrderDetails> custOrderDetails = new ArrayList<OrderDetails>();
 	private  ArrayList<OrderDetails> sortedTripOrderDetails = new ArrayList<OrderDetails>();
-	private  LinkedHashMap<String,LocalTime> processedOrderDetails = new LinkedHashMap<String,LocalTime>();
+	
 	
 
 
@@ -75,7 +75,8 @@ public class OrderFileProcessor {
 	public void sortList(List<OrderDetails> sortedTripOrderDetails) {
 
 		sortedTripOrderDetails.sort(Comparator.comparingDouble(OrderDetails::getRoundTripTime));	
-				
+		
+		callScheduler();
 	}
 	
 public void callScheduler() {
@@ -101,14 +102,5 @@ public void callScheduler() {
 		this.sortedTripOrderDetails = sortedTripOrderDetails;
 	}
 
-	public LinkedHashMap<String, LocalTime> getProcessedOrderDetails() {
-		return processedOrderDetails;
-	}
-
-	public void setProcessedOrderDetails(LinkedHashMap<String, LocalTime> processedOrderDetails) {
-		this.processedOrderDetails = processedOrderDetails;
-	}
-
-	
 
 }

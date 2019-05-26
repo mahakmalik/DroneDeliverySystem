@@ -71,13 +71,12 @@ public class Properties {
 		 OrderFileProcessor initial = new OrderFileProcessor();
 		 initial.bufferedReaderToArrayList(Properties.getINPUT_FILE_PATH());
 		
-		
-		 
-		 /*calculateNPSScore nps= new calculateNPSScore();
+				 
+		 calculateNPSScore nps= new calculateNPSScore();
 		 int score= nps.finalCalculation();
 
-		 DeliveryScheduleOutPutFile dsf = new DeliveryScheduleOutPutFile();
-		 dsf.creatingOutPutFile(OUTPUT_FILE_PATH , score);*/
+		 nps.callDeliveryScheduleOutPutFile();
+		 
 	}
 
 	
