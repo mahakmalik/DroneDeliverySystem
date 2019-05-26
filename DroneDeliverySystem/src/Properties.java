@@ -71,8 +71,7 @@ public class Properties {
 		 OrderFileProcessor initial = new OrderFileProcessor();
 		 initial.bufferedReaderToArrayList(Properties.getINPUT_FILE_PATH());
 		
-		 OrderScheduler schedule = new OrderScheduler();
-		 schedule.processing(OPEN_TIME);
+		
 		 
 		 /*calculateNPSScore nps= new calculateNPSScore();
 		 int score= nps.finalCalculation();

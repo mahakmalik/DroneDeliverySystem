@@ -5,15 +5,28 @@ public class OrderScheduler{
 	private static LocalTime dispatchTime;
 	private LocalTime deliveryTime;
 	private LocalTime returnTime;
+	private  ArrayList<OrderDetails> custOrderDetails;
+	private  ArrayList<OrderDetails> sortedTripOrderDetails;
 	
 	//to get the order list created while processing the input file
-	OrderFileProcessor ofp = new OrderFileProcessor();
+	
+	OrderScheduler(ArrayList<OrderDetails> sortedTripOrderDetails , ArrayList<OrderDetails> custOrderDetails ) {
+		
+		sortedTripOrderDetails = new ArrayList<OrderDetails>();  
+		  this.sortedTripOrderDetails.addAll(sortedTripOrderDetails);
+		  
+		  custOrderDetails = new ArrayList<OrderDetails>();  
+		  this.sortedTripOrderDetails.addAll(custOrderDetails); 
+		
+	}
+	//to get the order list created while processing the input file
+
 	
 	public void processing(LocalTime currDispatchTime) {
 		
 		OrderDetails order = selectNextOrder(currDispatchTime);
 		
-		int len=ofp.getCustOrderDetails().size();
+		int len=custOrderDetails.size();
 		
 			for(int i=0;i<len-1;i++) {	
 				
@@ -37,8 +50,8 @@ public class OrderScheduler{
 			
 			System.out.println(order.getOrderId());
 			
-			ofp.getSortedTripOrderDetails().remove(order);
-			ofp.getCustOrderDetails().remove(order);
+			sortedTripOrderDetails.remove(order);
+			custOrderDetails.remove(order);
 			
 			order = selectNextOrder(currDispatchTime);
 						
@@ -53,19 +66,17 @@ public class OrderScheduler{
 	public OrderDetails selectNextOrder(LocalTime currentDispatchTime) {
 		
 		
-		OrderDetails order = ofp.getSortedTripOrderDetails().stream()
-				.filter(ofp->currentDispatchTime.isAfter(ofp.getOrderPlaceTime()) || currentDispatchTime.equals(ofp.getOrderPlaceTime()))
+		OrderDetails order = sortedTripOrderDetails.stream()
+				.filter(o->currentDispatchTime.isAfter(o.getOrderPlaceTime()) || currentDispatchTime.equals(o.getOrderPlaceTime()))
 				.findAny()
 				.orElse(null);
 		
 
 		//get the order with the earliest order place time if no orders were found
-		if (order == null && !ofp.getCustOrderDetails().isEmpty()) {
-			order = ofp.getCustOrderDetails().get(0);
+		if (order == null && !custOrderDetails.isEmpty()) {
+			order = custOrderDetails.get(0);
 		}
 		
-	
-		System.out.println(order.getOrderId());
 		return order;
 
 

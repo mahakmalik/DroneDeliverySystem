@@ -30,7 +30,7 @@ public class OrderFileProcessor {
 
 		try {
 
-			reader = new BufferedReader(new FileReader(path));	
+			reader = new BufferedReader(new FileReader(path));
 
 			String line = reader.readLine();
 
@@ -76,6 +76,13 @@ public class OrderFileProcessor {
 
 		sortedTripOrderDetails.sort(Comparator.comparingDouble(OrderDetails::getRoundTripTime));	
 				
+	}
+	
+public void callScheduler() {
+	
+	    OrderScheduler os = new OrderScheduler(sortedTripOrderDetails,custOrderDetails);
+		os.processing(Properties.getOPEN_TIME());
+		
 	}
 
 	public ArrayList<OrderDetails> getCustOrderDetails() {
