@@ -3,7 +3,7 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.LinkedHashMap;
 
-public class calculateNPSScore {
+public class CalculateNPSScore {
 	
 	private static  LinkedHashMap<String,LocalTime> processedOrderDetails = new LinkedHashMap<String,LocalTime>();
 	private static int promotors;
@@ -11,27 +11,27 @@ public class calculateNPSScore {
 	private static int NPS;
 	private static int totalProcessedOrders;
 
-	public static void calculateNPS(OrderDetails order, LocalTime deliveryTime ) {
+	public static void calculateNPS(OrderDetails order, LocalTime deliveryTime,LocalTime currDispatchTime ) {
 		
 		
-	
-		int timeElapsed = (int) Duration.between(deliveryTime, order.getOrderPlaceTime()).toHours();
+	   //This will calculate the time diferrence between the order place time and delivery time
+		long timeElapsed = Duration.between(order.getOrderPlaceTime(),deliveryTime).toMinutes();
 		
+		System.out.println(timeElapsed);
 		
-		
-		if(timeElapsed <=1) {
+		if(timeElapsed <=60) {
 			promotors ++;
 			
 		}
 		
-		if(timeElapsed >= 4) {
+		if(timeElapsed > 180) {
 			
 			detractors++;
 		}
 		
 		totalProcessedOrders++;
-		
-		processedOrderDetails.put(order.getOrderId(),deliveryTime);
+		//the details that are processed are added to the processed file
+		processedOrderDetails.put(order.getOrderId(),currDispatchTime);
 		
 	}
 	
@@ -50,9 +50,9 @@ public class calculateNPSScore {
 	}
 	
 	public void callDeliveryScheduleOutPutFile() throws IOException {
-		
+		//This will call the class that will write the processedOrderdetails to the output file
 		DeliveryScheduleOutPutFile dsf = new DeliveryScheduleOutPutFile();
-		dsf.creatingOutPutFile(Properties.getOUTPUT_FILE_PATH(), NPS, processedOrderDetails) ;
+		dsf.creatingOutPutFile(MainClass.OUTPUT_FILE_PATH, NPS, processedOrderDetails) ;
 	}
 	
 	
