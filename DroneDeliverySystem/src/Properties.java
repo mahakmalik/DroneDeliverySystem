@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalTime;
 
@@ -13,8 +14,8 @@ public class Properties {
 	
 	private static final String OPEN_STORE_TIME = "06:00:00";
     private static final String CLOSE_STORE_TIME = "22:00:00";
-    private static String INPUT_FILE_PATH = "C:\\\\Users\\\\mahak\\\\eclipse-workspace\\\\DroneDeliverySystem\\\\src\\\\InputFileRows";
-    private static String OUTPUT_FILE_PATH = "C:\\\\Users\\\\mahak\\\\eclipse-workspace\\\\DroneDeliverySystem\\\\src\\\\OutPutFileRows";
+    private static String INPUT_FILE_PATH = new File("").getAbsolutePath() +  "\\src\\InputFileRows.txt";
+    private static String OUTPUT_FILE_PATH = new File("").getAbsolutePath() +  "\\src\\OutputFileRows.txt";
     private static LocalTime OPEN_TIME;
     private static LocalTime CLOSE_TIME;
 
@@ -67,7 +68,7 @@ public class Properties {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-
+		
 		 OrderFileProcessor initial = new OrderFileProcessor();
 		 initial.bufferedReaderToArrayList(Properties.getINPUT_FILE_PATH());
 		

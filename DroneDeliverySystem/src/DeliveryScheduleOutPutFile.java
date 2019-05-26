@@ -38,7 +38,7 @@ public class DeliveryScheduleOutPutFile {
 				for (Map.Entry<String,LocalTime> entry : processedOrderdetails.entrySet())  {
 					
 					String output = entry.getKey() + " " + entry.getValue().toString() ;
-					writer.write(output);
+					writer.append(output);
 					writer.newLine();
 					
 				}
