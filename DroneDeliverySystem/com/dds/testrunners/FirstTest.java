@@ -1,4 +1,4 @@
-package TestRunners;
+package com.dds.testrunners;
 
 import org.junit.runner.RunWith;
 import cucumber.api.CucumberOptions;

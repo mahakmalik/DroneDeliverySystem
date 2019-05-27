@@ -1,5 +1,5 @@
-package Tests;
-import com.DroneDeliveryApp.*;
+package com.dds.tests;
+import com.dds.appcode.*;
 
 import static org.junit.Assert.assertEquals;
 
