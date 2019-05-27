@@ -17,14 +17,12 @@ public class CalculateNPSScore {
 	   //This will calculate the time diferrence between the order place time and delivery time
 		long timeElapsed = Duration.between(order.getOrderPlaceTime(),deliveryTime).toMinutes();
 		
-		System.out.println(timeElapsed);
-		
-		if(timeElapsed <=60) {
+		if(timeElapsed <120) {
 			promotors ++;
 			
 		}
 		
-		if(timeElapsed > 180) {
+		if(timeElapsed >= 240) {
 			
 			detractors++;
 		}
