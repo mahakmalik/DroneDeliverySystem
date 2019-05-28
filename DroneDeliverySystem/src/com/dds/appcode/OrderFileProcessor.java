@@ -1,5 +1,6 @@
 package com.dds.appcode;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalTime;
@@ -24,7 +25,10 @@ public class OrderFileProcessor {
 
 		//using Java inbuilt class bufferreader to read the Input File
 		try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-
+			//check if file is empty
+                File file = new File(path);
+                if(file.length() ==0 || !file.exists()) return;
+			
 			String line = reader.readLine();
 			String[] splited = null;
 			
@@ -46,7 +50,12 @@ public class OrderFileProcessor {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		} 
+		
+		
+		
+		
 	}
 
 	public void createOrderList(String orderId, String location, LocalTime orderPlaceTime) {
