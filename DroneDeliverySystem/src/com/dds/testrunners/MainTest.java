@@ -6,10 +6,10 @@ import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features = "Features",
-		glue = "/DroneDeliverySystem/src"
+		features = "src\\com\\dds\\features",
+		glue = "com.dds.tests"
 		)
 
-public class FirstTest {
+public class MainTest {
 
 }
