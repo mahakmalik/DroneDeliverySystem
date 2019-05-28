@@ -1,4 +1,5 @@
 package com.dds.appcode;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -7,11 +8,15 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import com.dds.exceptions.FileNotFoundException;
+import com.dds.exceptions.MalformedFileDataException;
 
 /***
- * Purpose of this class is to read the input file Validate the contents of the Input file
- *  This class will create the order list from input file
- *  A sorted order list has been created according to the round trip time
+ * Purpose of this class is to read the input file Validate the contents of the
+ * Input file This class will create the order list from input file A sorted
+ * order list has been created according to the round trip time
  * 
  ***/
 
@@ -21,79 +26,83 @@ public class OrderFileProcessor {
 	private ArrayList<OrderDetails> sortedTripOrderDetails = new ArrayList<OrderDetails>();
 
 	// method to read the input file
-	public void bufferedReaderToArrayList(String path) {
+	public void bufferedReaderToArrayList(String path) throws FileNotFoundException, MalformedFileDataException {
 
-		//using Java inbuilt class bufferreader to read the Input File
+		// using Java inbuilt class BufferedReader to read the Input File
 		try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-			//check if file is empty
-                File file = new File(path);
-                if(file.length() ==0 || !file.exists()) return;
-			
-			String line = reader.readLine();
-			String[] splited = null;
-			
-			while (line != null) {
-				line = reader.readLine();
-                				
-				//Each row is split according to the space
-				if (line != null) {
-					splited = line.trim().split("\\s+");
-				}
-				
-				if(!checkTheValidityOfTheEntry(splited)) continue;
+			// check if file is empty and throw custom exception if it is
+			File file = new File(path);
+			if (file.length() == 0 || !file.exists())
+				throw new FileNotFoundException("Either the File is empty or does not exist!");
 
-				//Order place time is converted to LocalTime datatype from string
-				LocalTime orderPlaceTime = LocalTime.parse(splited[2]);
-				//create order method is created and details in each line is passed
-				createOrderList(splited[0], splited[1], orderPlaceTime);
+			String orderDetails = reader.readLine();
+			String[] orderDetails_trimmed = null;
+
+			while (orderDetails != null) {
+				orderDetails = reader.readLine();
+
+				// Each order row is split by whitespace
+				if (orderDetails != null) {
+					orderDetails_trimmed = orderDetails.trim().split("\\s+");
+				}
+
+				if (!checkTheValidityOfTheEntry(orderDetails_trimmed))
+					throw new MalformedFileDataException("File contains malformed entries!");
+
+				// orderPlacetime is converted to LocalTime object from string
+				LocalTime orderPlaceTime = LocalTime.parse(orderDetails_trimmed[2]);
+				// create order method is created and details in each line is passed
+				createOrderList(orderDetails_trimmed[0], orderDetails_trimmed[1], orderPlaceTime);
 			}
-			//sorted trip is not sorted before calling this function,it gets sorted after this function is called
-			sortList(getSortedTripOrderDetails());
+			// sorted trip is not sorted before calling this function,it gets sorted after
+			// this function is called
+			sortList(this.custOrderDetails);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		} 		
-		
+			throw new FileNotFoundException("Either the File is empty or does not exist!");
+		}
 	}
 
 	public void createOrderList(String orderId, String location, LocalTime orderPlaceTime) {
-        //the details of each order is passed to OrderDetails.java constructor
+		// the details of each order is passed to OrderDetails.java constructor
 		OrderDetails order = new OrderDetails(orderId, location, orderPlaceTime);
-        //the object of each order is stored into the custOrderdetails and sortedTripOrderDetails
-		getSortedTripOrderDetails().add(order);
-		getCustOrderDetails().add(order);
-
+		// the object of each order is stored into the custOrderdetails and
+		// sortedTripOrderDetails
+		if (order != null) {
+			// this.sortedTripOrderDetails.add(order);
+			this.custOrderDetails.add(order);
+		}
 	}
 
-	public void sortList(List<OrderDetails> sortedTripOrderDetails) {
-		sortedTripOrderDetails.sort(Comparator.comparingDouble(OrderDetails::getRoundTripTime));
-        //once we have all the required list we call the method callscheduler to pass the list to OrderScheduler.java
-		callScheduler();
+	public void sortList(List<OrderDetails> custOrderDetails) {
+		// sortedTripOrderDetails.sort(Comparator.comparingDouble(OrderDetails::getRoundTripTime));
+		this.sortedTripOrderDetails = (ArrayList<OrderDetails>) custOrderDetails.stream()
+				.sorted(Comparator.comparingDouble(OrderDetails::getRoundTripTime)).collect(Collectors.toList());
+		// once we have all the required list we call the method callscheduler to pass
+		// the list to OrderScheduler.java
+		this.callScheduler();
 	}
 
 	public void callScheduler() {
-        //now we can access the contents of the list in OrderScheduler.java
+		// now we can access the contents of the list in OrderScheduler.java
 		OrderScheduler os = new OrderScheduler(sortedTripOrderDetails, custOrderDetails);
-		//once the list are visible to OrderScheduler then processing method is called for order selection
+		// once the list are visible to OrderScheduler then processing method is called
+		// for order selection
 		os.orderSelection(MainClass.OPEN_STORE_TIME);
-
-	}
-	
-	public boolean checkTheValidityOfTheEntry(String[] splited) {	
-		
-		if(splited.length==3) {
-			
-			if(splited[0].matches("WM\\d{4}") && splited[1].matches("[NEWS]\\d+[NEWS]\\d+") 
-					&& LocalTime.parse(splited[2]).isAfter(LocalTime.parse("4:30:00")) || 
-					LocalTime.parse(splited[2]).isBefore(LocalTime.parse("10:00:00"))) {
-				return true;
-			}else return false;
-					
-		}
-		else return false;
 	}
 
+	public boolean checkTheValidityOfTheEntry(String[] splited) {
+		if (!(splited.length == 3) && splited[0].matches("WM\\d{4}") && splited[1].matches("[NEWS]\\d+[NEWS]\\d+")
+				&& LocalTime.parse(splited[2]).isAfter(LocalTime.parse("4:30:00"))
+				|| LocalTime.parse(splited[2]).isBefore(LocalTime.parse("10:00:00")))
+
+			return true;
+
+		else
+			return false;
+	}
+
+	// Getters and Setters for custOrderDetails and sortedTripOrderDetails
+	// ArrayLists
 	public ArrayList<OrderDetails> getCustOrderDetails() {
 		return custOrderDetails;
 	}

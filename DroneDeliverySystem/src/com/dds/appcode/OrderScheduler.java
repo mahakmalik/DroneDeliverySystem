@@ -22,7 +22,7 @@ public class OrderScheduler {
 	public void orderSelection(LocalTime currDispatchTime) {
 
 		// initially we call selectNextOrder with dispatch time = Store open time
-		OrderDetails order = selectNextOrder(currDispatchTime);
+		OrderDetails order = this.selectNextOrder(currDispatchTime);
 
 		// the loop will run till all the orders present in the file are processed
 		while (order != null) {
