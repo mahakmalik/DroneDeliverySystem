@@ -62,32 +62,32 @@ public class OrderFileProcessor {
 		}
 	}
 
-	public void createOrderList(String orderId, String location, LocalTime orderPlaceTime) {
+	public void createOrderList(String orderId, String location, LocalTime orderPlaceTime){
 		// the details of each order is passed to OrderDetails.java constructor
 		OrderDetails order = new OrderDetails(orderId, location, orderPlaceTime);
 		// the object of each order is stored into the custOrderdetails and
 		// sortedTripOrderDetails
-		if (order != null) {
+		if(order != null){
 			// this.sortedTripOrderDetails.add(order);
 			this.custOrderDetails.add(order);
 		}
 	}
 
-	public void sortList(List<OrderDetails> custOrderDetails) {
+	public void sortList(List<OrderDetails> custOrderDetails){
 		// sortedTripOrderDetails.sort(Comparator.comparingDouble(OrderDetails::getRoundTripTime));
 		this.sortedTripOrderDetails = (ArrayList<OrderDetails>) custOrderDetails.stream()
 				.sorted(Comparator.comparingDouble(OrderDetails::getRoundTripTime)).collect(Collectors.toList());
 		// once we have all the required list we call the method callscheduler to pass
 		// the list to OrderScheduler.java
-		this.callScheduler();
+		this.scheduler();
 	}
 
-	public void callScheduler() {
+	public void scheduler(){
 		// now we can access the contents of the list in OrderScheduler.java
-		OrderScheduler os = new OrderScheduler(sortedTripOrderDetails, custOrderDetails);
+		//OrderScheduler os = new OrderScheduler(sortedTripOrderDetails, custOrderDetails);
 		// once the list are visible to OrderScheduler then processing method is called
 		// for order selection
-		os.orderSelection(MainClass.OPEN_STORE_TIME);
+		new OrderScheduler().orderSelection(sortedTripOrderDetails, custOrderDetails);
 	}
 
 	public boolean checkTheValidityOfTheEntry(String[] splited) {	
