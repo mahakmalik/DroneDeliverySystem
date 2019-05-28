@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.dds.exceptions.FileNotFoundException;
+import com.dds.exceptions.ListEmptyException;
 import com.dds.exceptions.MalformedFileDataException;
 
 /***
@@ -26,7 +27,7 @@ public class OrderFileProcessor {
 	private ArrayList<OrderDetails> sortedTripOrderDetails = new ArrayList<OrderDetails>();
 
 	// method to read the input file
-	public void bufferedReaderToArrayList(String path) throws FileNotFoundException, MalformedFileDataException {
+	public void bufferedReaderToArrayList(String path) throws FileNotFoundException, MalformedFileDataException, ListEmptyException {
 
 		// using Java inbuilt class BufferedReader to read the Input File
 		try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
@@ -56,10 +57,19 @@ public class OrderFileProcessor {
 			}
 			// sorted trip is not sorted before calling this function,it gets sorted after
 			// this function is called
-			sortList(this.custOrderDetails);
+			if(!custOrderDetails.isEmpty()) {
+				sortList(this.custOrderDetails);
+			}
+			else {
+				throw new ListEmptyException("List is Empty!");
+			}
+			
 		} catch (IOException e) {
 			throw new FileNotFoundException("Either the File is empty or does not exist!");
-		}
+		} 
+//		catch (ListEmptyException e) {
+//			throw new ListEmptyException("Either the File is empty or does not exist!");
+//		}
 	}
 
 	public void createOrderList(String orderId, String location, LocalTime orderPlaceTime){
@@ -73,22 +83,28 @@ public class OrderFileProcessor {
 		}
 	}
 
-	public void sortList(List<OrderDetails> custOrderDetails){
+	public void sortList(ArrayList<OrderDetails> custOrderDetails) throws ListEmptyException{
 		// sortedTripOrderDetails.sort(Comparator.comparingDouble(OrderDetails::getRoundTripTime));
-		this.sortedTripOrderDetails = (ArrayList<OrderDetails>) custOrderDetails.stream()
-				.sorted(Comparator.comparingDouble(OrderDetails::getRoundTripTime)).collect(Collectors.toList());
+		if(!custOrderDetails.isEmpty()) {
+			this.sortedTripOrderDetails = (ArrayList<OrderDetails>) custOrderDetails.stream()
+					.sorted(Comparator.comparingDouble(OrderDetails::getRoundTripTime)).collect(Collectors.toList());
+			new OrderScheduler().orderSelection(sortedTripOrderDetails, custOrderDetails);
+		}	
+		else {
+			throw new ListEmptyException("List is Empty!");
+		}
 		// once we have all the required list we call the method callscheduler to pass
 		// the list to OrderScheduler.java
-		this.scheduler();
+		
 	}
 
-	public void scheduler(){
-		// now we can access the contents of the list in OrderScheduler.java
-		//OrderScheduler os = new OrderScheduler(sortedTripOrderDetails, custOrderDetails);
-		// once the list are visible to OrderScheduler then processing method is called
-		// for order selection
-		new OrderScheduler().orderSelection(sortedTripOrderDetails, custOrderDetails);
-	}
+//	public void scheduler() throws ListEmptyException{
+//		// now we can access the contents of the list in OrderScheduler.java
+//		//OrderScheduler os = new OrderScheduler(sortedTripOrderDetails, custOrderDetails);
+//		// once the list are visible to OrderScheduler then processing method is called
+//		// for order selection
+//		
+//	}
 
 	public boolean checkTheValidityOfTheEntry(String[] splited) {	
 
