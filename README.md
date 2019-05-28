@@ -24,6 +24,13 @@ The unit testing has been perdormed on the system using Cucumber and JUnit
 -	Production like data required and be available in the system prior to start of Unit Testing
 -	In each testing phase, Cycle 3 will be initiated if the defect rate is high in Cycle 2.
 
+# Testing Documents
+ 
+ - A requiremnet tracebility matrix(RTM) is created based on the requiremnets deduced from provided challenge question.
+ - The Test Scenarios are mapped to the requirments specified in RTM.
+ - Functional and Non-Functional Test Scenarios are created.
+ - Test Cases are mapped to each Test Scenario.
+
 
 
 
