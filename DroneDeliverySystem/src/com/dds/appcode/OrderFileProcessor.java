@@ -34,9 +34,7 @@ public class OrderFileProcessor {
 			
 			while (line != null) {
 				line = reader.readLine();
-                
-				
-				
+                				
 				//Each row is split according to the space
 				if (line != null) {
 					splited = line.trim().split("\\s+");

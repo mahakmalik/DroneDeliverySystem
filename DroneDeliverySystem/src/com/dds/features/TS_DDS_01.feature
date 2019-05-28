@@ -7,15 +7,11 @@ Scenario: Validate if the system is able to create the order
           
 Scenario: Validate if the System is not able to access the input File
           Given A invalid input file path
-          |"\\user\\InputFileRows.txt"|
-          |""|
+          |\\user\\InputFileRows.txt|
+          ||
           Then A error should pop
  
 Scenario: Validate if the System is able to access the input File
           Given A valid input file path
           |C:\\Users\\mahak\\git\\DroneDeliverySystem\\DroneDeliverySystem\\src\\InputFileRows.txt|
           Then orderlist should be created
-          
-Scenario: validate that file contains the user details in the format OrderId,Location,OrderPlaceTime
-          Given A valid input file with invalid entries
-          Then The generated order list should not have invalid entries
