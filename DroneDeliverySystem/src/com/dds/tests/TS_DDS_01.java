@@ -27,7 +27,7 @@ public class TS_DDS_01 {
 		System.out.println("Test Started");
 	}
 
-	@Test
+	
 	@When("Order details are given to order process method")
 	public void inputOrderParameters() {
 		op.createOrderList("WM001", "N11W5", LocalTime.parse("06:00:00"));

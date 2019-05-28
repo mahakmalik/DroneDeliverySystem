@@ -81,11 +81,16 @@ public class OrderFileProcessor {
 	}
 	
 	public boolean checkTheValidityOfTheEntry(String[] splited) {	
-		if( !(splited.length ==3 ) && splited[0].matches("WM\\d{4}") && splited[1].matches("[NEWS]\\d+[NEWS]\\d+") 
-			&& LocalTime.parse(splited[2]).isAfter(LocalTime.parse("4:30:00")) || LocalTime.parse(splited[2]).isBefore(LocalTime.parse("10:00:00")))
 		
-		return true;
-		
+		if(splited.length==3) {
+			
+			if(splited[0].matches("WM\\d{4}") && splited[1].matches("[NEWS]\\d+[NEWS]\\d+") 
+					&& LocalTime.parse(splited[2]).isAfter(LocalTime.parse("4:30:00")) || 
+					LocalTime.parse(splited[2]).isBefore(LocalTime.parse("10:00:00"))) {
+				return true;
+			}else return false;
+					
+		}
 		else return false;
 	}
 
