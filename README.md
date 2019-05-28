@@ -1,56 +1,34 @@
+## DroneDeliverySystem
 
-###____DroneDeliverySystem
+[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-Getting Started
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+The DroneDeliverySystem is a java project build using Eclipse IDE. Drone Delivery System is a tool to decide the schedule of orders. The tool maximizes the Net Promoter Score. The tool generates the list of delivery time for each order such that we can deliver the maximum orders within an hour of order place time.
+The unit testing has been perdormed on the system using Cucumber and JUnit
 
-Prerequisites
-What things you need to install the software and how to install them
+# Prerequisites
+- IDE that will run Java source Code
+- use JRE 1.8
+- download jar files for Cucumber, Gherkin and JUnit 4
 
-Give examples
-Installing
-A step by step series of examples that tell you how to get a development env running
+# Assumptions
 
-Say what the step will be
+-	The drone can carry only one packet at a time.
+-	The operates between 6:00 am and 10:PM on 7 days a week
+-	The list of orders is available before the execution of System.
+-	The orders can be placed only between 5:30 am and 9:30 pm.
+-	The drone shall not leave the warehouse before 6:00am
+-	If the drone return time exceeds 10:00 PM then order shall not be processed.
+-	The loading of drone takes only a minute.
+-	There is no other delay caused by environmental factors such as rain, wind, or other calamities.
+-	The drone is efficient and will not breakdown in middle of the delivery.
+-	Production like data required and be available in the system prior to start of Unit Testing
+-	In each testing phase, Cycle 3 will be initiated if the defect rate is high in Cycle 2.
 
-Give the example
-And repeat
 
-until finished
-End with an example of getting some data out of the system or using it for a little demo
 
-Running the tests
-Explain how to run the automated tests for this system
 
-Break down into end to end tests
-Explain what these tests test and why
 
-Give an example
-And coding style tests
-Explain what these tests test and why
 
-Give an example
-Deployment
-Add additional notes about how to deploy this on a live system
 
-Built With
-Dropwizard - The web framework used
-Maven - Dependency Management
-ROME - Used to generate RSS Feeds
-Contributing
-Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.
 
-Versioning
-We use SemVer for versioning. For the versions available, see the tags on this repository.
 
-Authors
-Billie Thompson - Initial work - PurpleBooth
-See also the list of contributors who participated in this project.
-
-License
-This project is licensed under the MIT License - see the LICENSE.md file for details
-
-Acknowledgments
-Hat tip to anyone whose code was used
-Inspiration
-etc
