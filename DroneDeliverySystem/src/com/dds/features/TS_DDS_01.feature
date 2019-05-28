@@ -15,3 +15,7 @@ Scenario: Validate if the System is able to access the input File
           Given A valid input file path
           |C:\\Users\\mahak\\git\\DroneDeliverySystem\\DroneDeliverySystem\\src\\InputFileRows.txt|
           Then orderlist should be created
+          
+Scenario: validate that file contains the user details in the format OrderId,Location,OrderPlaceTime
+          Given A valid input file with invalid entries
+          Then The generated order list should not have invalid entries

@@ -34,11 +34,15 @@ public class OrderFileProcessor {
 			
 			while (line != null) {
 				line = reader.readLine();
-
+                
+				
+				
 				//Each row is split according to the space
 				if (line != null) {
 					splited = line.trim().split("\\s+");
 				}
+				
+				if(!checkTheValidityOfTheEntry(splited)) continue;
 
 				//Order place time is converted to LocalTime datatype from string
 				LocalTime orderPlaceTime = LocalTime.parse(splited[2]);
@@ -51,10 +55,7 @@ public class OrderFileProcessor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
-		} 
-		
-		
-		
+		} 		
 		
 	}
 
@@ -68,7 +69,6 @@ public class OrderFileProcessor {
 	}
 
 	public void sortList(List<OrderDetails> sortedTripOrderDetails) {
-
 		sortedTripOrderDetails.sort(Comparator.comparingDouble(OrderDetails::getRoundTripTime));
         //once we have all the required list we call the method callscheduler to pass the list to OrderScheduler.java
 		callScheduler();
@@ -80,6 +80,15 @@ public class OrderFileProcessor {
 		//once the list are visible to OrderScheduler then processing method is called for order selection
 		os.orderSelection(MainClass.OPEN_STORE_TIME);
 
+	}
+	
+	public boolean checkTheValidityOfTheEntry(String[] splited) {	
+		if( !(splited.length ==3 ) && splited[0].matches("WM\\d{4}") && splited[1].matches("[NEWS]\\d+[NEWS]\\d+") 
+			&& LocalTime.parse(splited[2]).isAfter(LocalTime.parse("4:30:00")) || LocalTime.parse(splited[2]).isBefore(LocalTime.parse("10:00:00")))
+		
+		return true;
+		
+		else return false;
 	}
 
 	public ArrayList<OrderDetails> getCustOrderDetails() {
