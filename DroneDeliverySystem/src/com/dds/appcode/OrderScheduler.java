@@ -6,114 +6,155 @@ import java.util.Iterator;
 
 import com.dds.exceptions.ListEmptyException;
 
+/**
+ * OrderScheduler.java - The purpose of this class is to schedule orders for
+ * delivery
+ * 
+ * @author Mahak Malik
+ *
+ */
 public class OrderScheduler {
 
-	private static LocalTime dispatchTime;
 	private LocalTime deliveryTime;
 	private LocalTime returnTime;
 	private LocalTime currDispatchTime = MainClass.OPEN_STORE_TIME;
 	private LocalTime storeCloseTime = MainClass.CLOSE_STORE_TIME;
-	
-	//	private ArrayList<OrderDetails> OrderDetails = new ArrayList<OrderDetails>();
-	//	private ArrayList<OrderDetails> sortedDetails = new ArrayList<OrderDetails>();;
 
-	// this constructor helps to make the sorted and cut order details data
-	// available for processing
-	//	OrderScheduler(ArrayList<OrderDetails> sortedTripOrderDetails, ArrayList<OrderDetails> custOrderDetails) {
-	//
-	//		this.sortedDetails.addAll(sortedTripOrderDetails);
-	//
-	//		this.OrderDetails.addAll(custOrderDetails);
-	//
-	//	}
+	/**
+	 * Select order processing order based on the set assumptions (Store open and
+	 * close time in this case)
+	 * 
+	 * @param sortedTripOrderDetails - List that contains orders sorted by
+	 *                               round-trip time.
+	 * @param custOrderDetails       - List that contains all orders as it is.
+	 * @throws ListEmptyException - If any List is empty.
+	 */
+	public void orderSelection(ArrayList<OrderDetails> sortedTripOrderDetails, ArrayList<OrderDetails> custOrderDetails)
+			throws ListEmptyException {
 
-	public void orderSelection(ArrayList<OrderDetails> sortedTripOrderDetails,
-			ArrayList<OrderDetails> custOrderDetails) throws ListEmptyException{
-		
-		while(!sortedTripOrderDetails.isEmpty()) {
+		while (!sortedTripOrderDetails.isEmpty()) {
 			Iterator<OrderDetails> iterator = sortedTripOrderDetails.iterator();
-			while(iterator.hasNext()) {
+			while (iterator.hasNext()) {
 				OrderDetails order = this.selectNextOrder(sortedTripOrderDetails, custOrderDetails);
 
-				// the loop will run till all the orders present in the file are processed
 				if (order != null) {
 					if (order.getOrderPlaceTime().isAfter(this.currDispatchTime)) {
-						this.currDispatchTime = order.getOrderPlaceTime();
+						this.setCurrDispatchTime(order.getOrderPlaceTime());
 					}
-					// we will add 1 minute to the dispatch time according to the assumption that it
-					// takes 1 minute for loading of drone
-					this.currDispatchTime = this.currDispatchTime.plusMinutes(1);
-					// calling the delivery function to get the time at which order was delivered to
-					// the customer
-					deliveryTime = this.getDeliveryTime(order, this.currDispatchTime);
+					// add 1 minute to the dispatch time according to the assumption that it
+					// takes 1 minute to load the drone
+					this.setCurrDispatchTime(this.getCurrDispatchTime().plusMinutes(1));
+					this.setDeliveryTime(this.getDeliveryTime(order, this.getCurrDispatchTime()));
 
 					// when the drone comes back to the base;
-					returnTime = this.getReturnTime(order, this.currDispatchTime);
-					if(returnTime.isAfter(storeCloseTime)) {
+					this.setReturnTime(this.getReturnTime(order, this.getCurrDispatchTime()));
+					if (this.getReturnTime().isAfter(storeCloseTime)) {
 						sortedTripOrderDetails.remove(order);
 						custOrderDetails.remove(order);
-						
-						
-					}else {
 
-					// calling method to calculate the NPS score
-					CalculateNPSScore.calculateNPS(order, deliveryTime, this.currDispatchTime);
+					} else {
 
-					// the return time for previous order will now be the dispatch time for the next
-					// order
-					this.currDispatchTime = returnTime;
+						// calculate the NPS score
+						CalculateNPSScore.calculateNPS(order, this.deliveryTime, this.getCurrDispatchTime());
 
-					// we will remove the selected orders as the loop will run till the list is
-					// empty
-					sortedTripOrderDetails.remove(order);
-					custOrderDetails.remove(order);
+						// return time for previous order will be dispatch time for next order
+						this.setCurrDispatchTime(this.getReturnTime());
+
+						// remove selected orders till list empty
+						sortedTripOrderDetails.remove(order);
+						custOrderDetails.remove(order);
 					}
+				}
 			}
-		}
-		// initially we call selectNextOrder with dispatch time = Store open time
-		
-			//order = this.selectNextOrder(sortedTripOrderDetails, custOrderDetails);
+
 		}
 	}
 
-	// we are selecting the order that should be picked next.
+	/**
+	 * Retrieve/Select next order to be processed that will maximize NPS
+	 * @param sortedTripOrderDetails - List with orders sorted by roundTripTime
+	 * @param custOrderDetails - List with all orders as it is.
+	 * @return OrderDetails object representing the next order to be processed
+	 * @throws ListEmptyException
+	 * @see OrderDetails
+	 */
 	public OrderDetails selectNextOrder(ArrayList<OrderDetails> sortedTripOrderDetails,
 			ArrayList<OrderDetails> custOrderDetails) throws ListEmptyException {
-		// We will select the first order present in the sorted list according to the
-		// currdispatch time
+		
 		OrderDetails order = sortedTripOrderDetails.stream()
 				.filter(o -> this.currDispatchTime.isAfter(o.getOrderPlaceTime())
 						|| currDispatchTime.equals(o.getOrderPlaceTime()))
 				.findAny().orElse(null);
 
-		// get the order with the earliest order place time if no orders were found
+		// get order with the earliest/least order place time if no orders found
 		if (order == null && !custOrderDetails.isEmpty()) {
 			order = custOrderDetails.get(0);
 		}
-//		else {
-//			continue;
-//		}
 		return order;
 	}
-
-	public LocalTime getDeliveryTime(OrderDetails Order, LocalTime currDispatchTime){
-		int minutes = (int) (Order.getRoundTripTime() / 2);
+	
+	/**
+	 * Set value of deliveryTime.
+	 * @param deliveryTime
+	 */
+	public void setDeliveryTime(LocalTime deliveryTime) {
+		this.deliveryTime = deliveryTime;
+	}
+	
+	/**
+	 * Calculate and Retrieve value of deliveryTime.
+	 * @param order - OrderDetails object representing customer order.
+	 * @param currDispatchTime - LocalTime object with earliest possible dispatch time.
+	 * @return LocalTime object representing the time of delivery.
+	 */
+	public LocalTime getDeliveryTime(OrderDetails order, LocalTime currDispatchTime) {
+		int minutes = (int) (order.getRoundTripTime() / 2);
 		deliveryTime = currDispatchTime.plusMinutes(minutes);
 		return deliveryTime;
 	}
 
-	public LocalTime getReturnTime(OrderDetails Order, LocalTime currDispatchTime){
-		int minutes = (int) (Order.getRoundTripTime());
+	/**
+	 * Calculate and Retrieve value of returnTime, i.e., the time of drone return.
+	 * @param order - OrderDetails object representing customer order.
+	 * @param currDispatchTime - Earliest possible dispatch time.
+	 * @return LocalTime object representing time of drone return.
+	 */
+	public LocalTime getReturnTime(OrderDetails order, LocalTime currDispatchTime) {
+		int minutes = (int) (order.getRoundTripTime());
 		returnTime = currDispatchTime.plusMinutes(minutes);
 		return returnTime;
 	}
-
-	public static LocalTime getDispatchTime() {
-		return dispatchTime;
+	
+	/**
+	 * Retrieve value of currdispatchTime.
+	 * @return LocalTime object with earliest possible drone dispatch time.
+	 */
+	public LocalTime getCurrDispatchTime() {
+		return currDispatchTime;
 	}
-
-	public static void setDispatchTime(LocalTime dispatchTime) {
-		OrderScheduler.dispatchTime = dispatchTime;
+	
+	/**
+	 * Set the value of currDispatchTime
+	 * @param currDispatchTime - Earliest possible dispatch time.
+	 */
+	public void setCurrDispatchTime(LocalTime currDispatchTime) {
+		this.currDispatchTime = currDispatchTime;
+	}
+	
+	/**
+	 * Retrieve value of returnTime.
+	 * @return LocalTime object with value of drone return time after completing delivery.
+	 */
+	public LocalTime getReturnTime() {
+		return returnTime;
+	}
+	
+	/**
+	 * Set the value of returnTime
+	 * @param returnTime - LocalTime object with value of drone return time after completing delivery.
+	 */
+	public void setReturnTime(LocalTime returnTime) {
+		this.returnTime = returnTime;
 	}
 
 }
