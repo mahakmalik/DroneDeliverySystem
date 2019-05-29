@@ -10,6 +10,21 @@ The unit testing has been performed on the system using Cucumber and JUnit
 - use JRE 1.8
 - download jar files for Cucumber, Gherkin and JUnit 4
 
+# Tools
+- Programming Language : Java & Gherkin
+  The reason for using java is that it is an object oriented lannguage and offers automatic garbage collection.
+  We can employ security rules using if block as we cannot bypass if block during code execution.
+  Java source code can be run on any operating system.
+  It is free of cost many frmaeworks such as Spring, NetBeans are available.
+  Gherkin is used for writing test scenarios in cucumber.It is a plain english language and anyone can understand it.
+  
+ - IDE: Eclipse
+ - Testing Tools: Cucumber & JUnit4
+   Cucumber and JUnit offer a variety of options that make testing easier. Such as we can define a test scenario in cucumber using     Gherkin language and create a corresponding java file that will contain the source code for that scenario.
+   It is easier to track and understand.
+   various test annotations and assertions are available for testing the output of test method.
+  
+  
 # Assumptions
 
 -	The drone can carry only one packet at a time.
@@ -39,6 +54,7 @@ The unit testing has been performed on the system using Cucumber and JUnit
  - A validation check should be there that if a order location is far away from range of one warehouse then it should be diverted to a nearer warehouse.
  - A check for duplicate order id should also be done.
  - The unprocessed order should be added in the rejected list and should be printed out along with the output file.As it would help to validate which orders have been rejected and ifpossible can be corrected.
+ - If a we based system is developed then we can use selenium in addition to already present test tools.
  
  # Flow Diagram 
  ![image](https://user-images.githubusercontent.com/51058934/58581855-7aa87180-821e-11e9-82c5-0747d1e3f671.png)
