@@ -36,6 +36,8 @@ public class ValidateCreateOrderList {
 		assertEquals(op.getCustOrderDetails().size(), 1);
 
 	}
+	
+	
 
 	
 	
