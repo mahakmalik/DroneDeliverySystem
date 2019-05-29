@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
 The DroneDeliverySystem is a java project build using Eclipse IDE. Drone Delivery System is a tool to decide the schedule of orders. The tool maximizes the Net Promoter Score. The tool generates the list of delivery time for each order such that we can deliver the maximum orders within an hour of order place time.
-The unit testing has been perdormed on the system using Cucumber and JUnit
+The unit testing has been performed on the system using Cucumber and JUnit
 
 # Prerequisites
 - IDE that will run Java source Code
@@ -20,16 +20,25 @@ The unit testing has been perdormed on the system using Cucumber and JUnit
 -	If the drone return time exceeds 10:00 PM then order shall not be processed.
 -	The loading of drone takes only a minute.
 -	There is no other delay caused by environmental factors such as rain, wind, or other calamities.
--	The drone is efficient and will not breakdown in middle of the delivery.
+-	The drone is efficient and will not breakdown in middle of the delivery
+- The drone has enough battery that it can carry out all the operations. 
 -	Production like data required and be available in the system prior to start of Unit Testing
 -	In each testing phase, Cycle 3 will be initiated if the defect rate is high in Cycle 2.
 
 # Testing Documents
  
- - A requiremnet tracebility matrix(RTM) is created based on the requiremnets deduced from provided challenge question.
+ - A requirement tracebility matrix(RTM) is created based on the requiremnets deduced from provided challenge question.
  - The Test Scenarios are mapped to the requirments specified in RTM.
  - Functional and Non-Functional Test Scenarios are created.
  - Test Cases are mapped to each Test Scenario.
+ 
+ # Future Work
+ 
+ - We can modify the code if more than one drone is used for operations
+ - There should be a recovery mechanism for drone such that how shall we recover if a drone breaks down in the middle of a delivery
+ - A validation check should be there that if a order location is far away from range of one warehouse then it should be diverted to a nearer warehouse.
+ - A check for duplicate order id should also be done.
+ - The unprocessed order should be added in the rejected list and should be printed out along with the output file.As it would help to validate which orders have been rejected and ifpossible can be corrected.
 
 
 
