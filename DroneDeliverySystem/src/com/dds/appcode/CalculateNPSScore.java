@@ -6,6 +6,11 @@ import java.util.LinkedHashMap;
 
 import com.dds.exceptions.FileNotFoundException;
 
+/**
+ * Class to calculate NPS 
+ * @author Mahak Malik
+ *
+ */
 public class CalculateNPSScore {
 	
 	private static  LinkedHashMap<String,LocalTime> processedOrderDetails = new LinkedHashMap<String,LocalTime>();

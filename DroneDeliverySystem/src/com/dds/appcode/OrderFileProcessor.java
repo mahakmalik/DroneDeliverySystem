@@ -30,11 +30,10 @@ public class OrderFileProcessor {
 	 * and createOrderList()
 	 * 
 	 * @param path
-	 * @throws FileNotFoundException      - If the file is not found at the provided path
+	 * @throws FileNotFoundException      - If the file is not found at the provided
+	 *                                    path
 	 * @throws MalformedFileDataException - If the file contains malformed data
 	 * @throws ListEmptyException
-	 * @see createOrderList()
-	 * @see checkTheValidityOfTheEntry()
 	 */
 	public void bufferedReaderToArrayList(String path)
 			throws FileNotFoundException, MalformedFileDataException, ListEmptyException {
@@ -79,9 +78,9 @@ public class OrderFileProcessor {
 	/**
 	 * Create an ArrayList custOrderDetails with objects of class OrderDetails.
 	 * 
-	 * @param orderId        - unique order ID for each order
-	 * @param location       - location where order needs to be delivered
-	 * @param orderPlaceTime - time at which the order was placed
+	 * @param orderId         - unique order ID for each order
+	 * @param deliverLocation - location where order needs to be delivered
+	 * @param orderPlaceTime  - time at which the order was placed
 	 * @see OrderDetails
 	 */
 	public void createOrderList(String orderId, String deliveryLocation, LocalTime orderPlaceTime) {

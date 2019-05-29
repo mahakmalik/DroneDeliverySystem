@@ -74,8 +74,8 @@ public class OrderScheduler {
 	 * Retrieve/Select next order to be processed that will maximize NPS
 	 * @param sortedTripOrderDetails - List with orders sorted by roundTripTime
 	 * @param custOrderDetails - List with all orders as it is.
-	 * @return OrderDetails object representing the next order to be processed
-	 * @throws ListEmptyException
+	 * @return OrderDetails object representing the next order to be processed.
+	 * @throws ListEmptyException - If any of the list of empty.
 	 * @see OrderDetails
 	 */
 	public OrderDetails selectNextOrder(ArrayList<OrderDetails> sortedTripOrderDetails,
@@ -95,7 +95,7 @@ public class OrderScheduler {
 	
 	/**
 	 * Set value of deliveryTime.
-	 * @param deliveryTime
+	 * @param deliveryTime - LocalTime object with value of deliveryTime.
 	 */
 	public void setDeliveryTime(LocalTime deliveryTime) {
 		this.deliveryTime = deliveryTime;
