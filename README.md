@@ -41,8 +41,7 @@ The unit testing has been performed on the system using Cucumber and JUnit
  - The unprocessed order should be added in the rejected list and should be printed out along with the output file.As it would help to validate which orders have been rejected and ifpossible can be corrected.
  
  # Flow Diagram 
- ![image]
- (https://user-images.githubusercontent.com/51058934/58581855-7aa87180-821e-11e9-82c5-0747d1e3f671.png)
+ ![image](https://user-images.githubusercontent.com/51058934/58581855-7aa87180-821e-11e9-82c5-0747d1e3f671.png)
 
 
 
