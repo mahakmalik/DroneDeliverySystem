@@ -2,32 +2,38 @@ package com.dds.tests;
 
 import java.util.List;
 
+import org.junit.Rule;
 import org.junit.Test;
-
+import org.junit.rules.ExpectedException;
 import com.dds.appcode.OrderFileProcessor;
-import com.dds.exceptions.FileNotFoundException;
-
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class ValidateBufferedtoArrayListMethod {
-    
+	@Rule
+	public ExpectedException exceptionRule = ExpectedException.none();
+	
 	OrderFileProcessor ofp=new OrderFileProcessor();
 	
-	@Test(expected = FileNotFoundException.class)
+	@Test
 	@When("^incorrect input file path is entered$")
 	public void incorrect_input_file_path_is_entered(DataTable data) throws Throwable {
-		try {
+		
 		List<String> path = data.asList(String.class);
-	    
+		try {
 		ofp.bufferedReaderToArrayList(path.get(0));
 		ofp.bufferedReaderToArrayList(path.get(1));
 		ofp.bufferedReaderToArrayList(path.get(2));
-		} catch(Exception e){
+		
+		}catch(Exception e) {
+			System.out.println(e);
 			
-			throw new FileNotFoundException("Either the File is empty or does not exist!");
 		}
+		
+	
+			    
+		
 		
 	}
 
