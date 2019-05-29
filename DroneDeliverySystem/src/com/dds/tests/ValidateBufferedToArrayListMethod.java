@@ -15,18 +15,16 @@ public class ValidateBufferedtoArrayListMethod {
     
 	OrderFileProcessor ofp=new OrderFileProcessor();
 	
-	@Test(expected = FileNotFoundException.class)
+	
 	@When("^incorrect input file path is entered$")
-	public void incorrect_input_file_path_is_entered(DataTable data) throws Throwable {
-		try {
+	public void incorrect_input_file_path_is_entered(DataTable data) throws FileNotFoundException {
 		List<String> path = data.asList(String.class);
-	    
+		try {	    
 		ofp.bufferedReaderToArrayList(path.get(0));
 		ofp.bufferedReaderToArrayList(path.get(1));
 		ofp.bufferedReaderToArrayList(path.get(2));
 		} catch(Exception e){
-			
-			throw new FileNotFoundException("Either the File is empty or does not exist!");
+			System.out.println(e);
 		}
 		
 	}
@@ -49,5 +47,5 @@ public class ValidateBufferedtoArrayListMethod {
 	public void file_not_found_exception_should__not_be_thrown() throws Throwable {
 	    
 	}
-	
+
 }
