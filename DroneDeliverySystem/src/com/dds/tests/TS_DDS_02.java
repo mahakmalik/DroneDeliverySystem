@@ -23,7 +23,7 @@ public class TS_DDS_02 {
 		
 	@Given("^the orderplacetime is after store close hours$")
 	public void when_orderplaceTime_is_after_store_close_hours() throws Throwable {	
-		String[] array = {"WM003" , "N7E3" ,"23:00:00"};		
+		String[] array = {"WM003" , "N7E3" ,"23:00:00"};
 		assertEquals(op.checkTheValidityOfTheEntry(array),false);		 
 	}
 }

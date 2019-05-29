@@ -8,7 +8,8 @@ public class OrderScheduler {
 	private LocalTime returnTime;
 	private ArrayList<OrderDetails> OrderDetails = new ArrayList<OrderDetails>();
 	private ArrayList<OrderDetails> sortedDetails = new ArrayList<OrderDetails>();;
-
+    private LocalTime storeCloseTime = MainClass.CLOSE_STORE_TIME;
+	
 	// this constructor helps to make the sorted and cut order details data
 	// available for processing
 	OrderScheduler(ArrayList<OrderDetails> sortedTripOrderDetails, ArrayList<OrderDetails> custOrderDetails) {
@@ -37,8 +38,18 @@ public class OrderScheduler {
 			deliveryTime = getDeliveryTime(order, currDispatchTime);
 
 			// when the drone comes back to the base;
+			
 			returnTime = getDeliveryTime(order, currDispatchTime);
 
+			if(returnTime.isAfter(storeCloseTime))
+			{   
+				sortedDetails.remove(order);
+				OrderDetails.remove(order);
+				
+				
+			}else {
+				
+			
 			// calling method to calculate the NPS score
 			CalculateNPSScore.calculateNPS(order, deliveryTime, currDispatchTime);
 
@@ -52,7 +63,7 @@ public class OrderScheduler {
 			OrderDetails.remove(order);
 
 			order = selectNextOrder(currDispatchTime);
-
+			}
 		}
 
 	}
@@ -89,7 +100,7 @@ public class OrderScheduler {
 		int minutes = (int) (Order.getRoundTripTime());
 
 		returnTime = currDispatchTime.plusMinutes(minutes);
-
+		
 		return returnTime;
 
 	}

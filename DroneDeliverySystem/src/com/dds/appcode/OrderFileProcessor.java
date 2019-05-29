@@ -90,13 +90,13 @@ public class OrderFileProcessor {
 		os.orderSelection(MainClass.OPEN_STORE_TIME);
 	}
 
-	public boolean checkTheValidityOfTheEntry(String[] splited) {	
+	public boolean checkTheValidityOfTheEntry(String[] orderDetails_trimmed) {	
 
-		if(splited.length==3) {
+		if(orderDetails_trimmed.length==3) {
 
-			if(splited[0].matches("WM\\d{4}") && splited[1].matches("[NEWS]\\d+[NEWS]\\d+") 
-					&& LocalTime.parse(splited[2]).isAfter(LocalTime.parse("4:30:00")) || 
-					LocalTime.parse(splited[2]).isBefore(LocalTime.parse("10:00:00"))) {
+			if(orderDetails_trimmed[0].matches("WM\\d{4}") && orderDetails_trimmed[1].matches("[NEWS]\\d+[NEWS]\\d+") 
+					&& LocalTime.parse(orderDetails_trimmed[2]).isAfter(LocalTime.parse("4:30:00")) || 
+					LocalTime.parse(orderDetails_trimmed[2]).isBefore(LocalTime.parse("22:00:00"))) {
 				return true;
 			}else return false;
 

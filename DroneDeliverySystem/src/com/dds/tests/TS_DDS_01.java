@@ -22,7 +22,7 @@ public class TS_DDS_01 {
     public ExpectedException thrown = ExpectedException.none();
 	OrderFileProcessor op = new OrderFileProcessor();
 
-	@Given("^A system is source code is available$")
+	@Given("^System source code is available$")
 	public void a_system_is_source_code_is_available() throws Throwable {
 		System.out.println("Test Started");
 	}

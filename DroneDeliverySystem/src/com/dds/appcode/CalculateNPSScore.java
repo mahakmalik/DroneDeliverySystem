@@ -19,7 +19,7 @@ public class CalculateNPSScore {
 		long timeElapsed = Duration.between(order.getOrderPlaceTime(),deliveryTime).toMinutes();
 		
 		if(timeElapsed <120) {
-			promotors ++;
+			setPromotors(getPromotors() + 1);
 			
 		}
 		
@@ -41,7 +41,7 @@ public class CalculateNPSScore {
 			return 0;
 		}
 		
-		NPS = ((promotors - detractors ) * 100) / totalProcessedOrders;
+		NPS = ((getPromotors() - detractors ) * 100) / totalProcessedOrders;
 		
 		return NPS;
 		
@@ -52,6 +52,14 @@ public class CalculateNPSScore {
 		//This will call the class that will write the processedOrderdetails to the output file
 		DeliveryScheduleOutPutFile dsf = new DeliveryScheduleOutPutFile();
 		dsf.creatingOutPutFile(MainClass.OUTPUT_FILE_PATH, NPS, processedOrderDetails) ;
+	}
+
+	public static int getPromotors() {
+		return promotors;
+	}
+
+	public static void setPromotors(int promotors) {
+		CalculateNPSScore.promotors = promotors;
 	}
 	
 	
