@@ -11,17 +11,12 @@ public class OrderScheduler {
 	private static LocalTime dispatchTime;
 	private LocalTime deliveryTime;
 	private LocalTime returnTime;
-<<<<<<< HEAD
-	private ArrayList<OrderDetails> OrderDetails = new ArrayList<OrderDetails>();
-	private ArrayList<OrderDetails> sortedDetails = new ArrayList<OrderDetails>();;
-    private LocalTime storeCloseTime = MainClass.CLOSE_STORE_TIME;
-	
-=======
 	private LocalTime currDispatchTime = MainClass.OPEN_STORE_TIME;
+	private LocalTime storeCloseTime = MainClass.CLOSE_STORE_TIME;
+	
 	//	private ArrayList<OrderDetails> OrderDetails = new ArrayList<OrderDetails>();
 	//	private ArrayList<OrderDetails> sortedDetails = new ArrayList<OrderDetails>();;
 
->>>>>>> refs/remotes/origin/master
 	// this constructor helps to make the sorted and cut order details data
 	// available for processing
 	//	OrderScheduler(ArrayList<OrderDetails> sortedTripOrderDetails, ArrayList<OrderDetails> custOrderDetails) {
@@ -54,6 +49,12 @@ public class OrderScheduler {
 
 					// when the drone comes back to the base;
 					returnTime = this.getReturnTime(order, this.currDispatchTime);
+					if(returnTime.isAfter(storeCloseTime)) {
+						sortedTripOrderDetails.remove(order);
+						custOrderDetails.remove(order);
+						
+						
+					}else {
 
 					// calling method to calculate the NPS score
 					CalculateNPSScore.calculateNPS(order, deliveryTime, this.currDispatchTime);
@@ -66,44 +67,8 @@ public class OrderScheduler {
 					// empty
 					sortedTripOrderDetails.remove(order);
 					custOrderDetails.remove(order);
+					}
 			}
-<<<<<<< HEAD
-			// we will add 1 minute to the dispatch time according to the assumption that it
-			// takes 1 minute for loading of drone
-			currDispatchTime = currDispatchTime.plusMinutes(1);
-			// calling the delivery function to get the time at which order was delivered to
-			// the customer
-			deliveryTime = getDeliveryTime(order, currDispatchTime);
-
-			// when the drone comes back to the base;
-			
-			returnTime = getDeliveryTime(order, currDispatchTime);
-
-			if(returnTime.isAfter(storeCloseTime))
-			{   
-				sortedDetails.remove(order);
-				OrderDetails.remove(order);
-				
-				
-			}else {
-				
-			
-			// calling method to calculate the NPS score
-			CalculateNPSScore.calculateNPS(order, deliveryTime, currDispatchTime);
-
-			// the return time for previous order will now be the dispatch time for the next
-			// order
-			currDispatchTime = returnTime;
-
-			// we will remove the selected orders as the loop will run till the list is
-			// empty
-			sortedDetails.remove(order);
-			OrderDetails.remove(order);
-
-			order = selectNextOrder(currDispatchTime);
-			}
-=======
->>>>>>> refs/remotes/origin/master
 		}
 		// initially we call selectNextOrder with dispatch time = Store open time
 		
@@ -140,10 +105,6 @@ public class OrderScheduler {
 	public LocalTime getReturnTime(OrderDetails Order, LocalTime currDispatchTime){
 		int minutes = (int) (Order.getRoundTripTime());
 		returnTime = currDispatchTime.plusMinutes(minutes);
-<<<<<<< HEAD
-		
-=======
->>>>>>> refs/remotes/origin/master
 		return returnTime;
 	}
 
