@@ -20,7 +20,7 @@ public class ValidateCreateOrderList {
 		System.out.println("Test Started");
 	}
 	
-	@When("Order details are given to order process method")
+	@When("^Order details are given to order process method$")
 	public void inputOrderParameters() {
 		op.createOrderList("WM001", "N11W5", LocalTime.parse("06:00:00"));
 	}
@@ -31,7 +31,20 @@ public class ValidateCreateOrderList {
 
 	}
 	
-	
+	@When("^Invalid Order details are given to order process method$")
+	public void invalid_inputOrderParameters() {
+		try {
+		op.createOrderList("WM001", "N11I5", LocalTime.parse("06:00:00"));
+		}catch(Exception e) {
+			System.out.println("Order details are invalid" + e);
+		}
+	}
+
+	@Then("^Order list should result in error$")
+	public void order_list_should_not_be_created() throws Throwable {	
+		assertEquals(op.getCustOrderDetails().size(), 0);
+
+	}
 
 	
 	
