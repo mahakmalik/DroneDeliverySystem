@@ -59,9 +59,6 @@ public class DeliveryScheduleOutPutFile {
 		} finally {
 			if (writer != null) {
 				try {
-					CalculateNPSScore.NPS=0;
-					CalculateNPSScore.promotors=0;
-					CalculateNPSScore.detractors=0;
 					writer.close();
 				} catch (IOException e) {
 					e.printStackTrace();
