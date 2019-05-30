@@ -16,7 +16,7 @@ The unit testing has been performed on the system using Cucumber and JUnit
 2) Open Eclipse and select File -> Import
 3) In the import window select Git->Projects from Git->Clone URI
 4) Import as Existing Project
-5) One imported, right click on Project (DroneDeliverySystem) and select Build Path -> Configure Build Path
+5) Once imported, right click on Project (DroneDeliverySystem) and select Build Path -> Configure Build Path
 6) Go to Source Tab and remove everything already there
 7) Click Add Folder and select Main and Test and click OK
 8) Now go to Libraries Tab and select Add External JARs...and add the provided JARs and click Apply and Close
