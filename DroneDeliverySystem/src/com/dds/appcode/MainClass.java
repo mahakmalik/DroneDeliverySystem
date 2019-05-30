@@ -18,8 +18,8 @@ public class MainClass {
 	
 	public static final LocalTime OPEN_STORE_TIME = LocalTime.of(6, 0,0);
     public static final LocalTime CLOSE_STORE_TIME = LocalTime.of(22, 0,0);
-    public static final String INPUT_FILE_PATH = new File("").getAbsolutePath() +  "\\src\\InputFileRows.txt";
-    public static final String OUTPUT_FILE_PATH = new File("").getAbsolutePath() +  "\\src\\OutputFileRows.txt";   
+    public static final String INPUT_FILE_PATH = new File("").getAbsolutePath() +  "\\Resources\\InputFileRows.txt";
+    public static final String OUTPUT_FILE_PATH = new File("").getAbsolutePath() +  "\\Resources\\OutputFileRows.txt";   
    
     /**
      * This is the program's entry point. Calls bufferdReaderToArrayList() method with the orders file as input.
