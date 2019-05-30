@@ -7,8 +7,7 @@ import java.util.Iterator;
 import com.dds.exceptions.ListEmptyException;
 
 /**
- * OrderScheduler.java - The purpose of this class is to schedule orders for
- * delivery
+ * The purpose of this class is to schedule orders for delivery
  * 
  * @author Mahak Malik
  *
@@ -72,15 +71,16 @@ public class OrderScheduler {
 
 	/**
 	 * Retrieve/Select next order to be processed that will maximize NPS
+	 * 
 	 * @param sortedTripOrderDetails - List with orders sorted by roundTripTime
-	 * @param custOrderDetails - List with all orders as it is.
+	 * @param custOrderDetails       - List with all orders as it is.
 	 * @return OrderDetails object representing the next order to be processed.
 	 * @throws ListEmptyException - If any of the list of empty.
 	 * @see OrderDetails
 	 */
 	public OrderDetails selectNextOrder(ArrayList<OrderDetails> sortedTripOrderDetails,
 			ArrayList<OrderDetails> custOrderDetails) throws ListEmptyException {
-		
+
 		OrderDetails order = sortedTripOrderDetails.stream()
 				.filter(o -> this.currDispatchTime.isAfter(o.getOrderPlaceTime())
 						|| currDispatchTime.equals(o.getOrderPlaceTime()))
@@ -92,19 +92,22 @@ public class OrderScheduler {
 		}
 		return order;
 	}
-	
+
 	/**
 	 * Set value of deliveryTime.
+	 * 
 	 * @param deliveryTime - LocalTime object with value of deliveryTime.
 	 */
 	public void setDeliveryTime(LocalTime deliveryTime) {
 		this.deliveryTime = deliveryTime;
 	}
-	
+
 	/**
 	 * Calculate and Retrieve value of deliveryTime.
-	 * @param order - OrderDetails object representing customer order.
-	 * @param currDispatchTime - LocalTime object with earliest possible dispatch time.
+	 * 
+	 * @param order            - OrderDetails object representing customer order.
+	 * @param currDispatchTime - LocalTime object with earliest possible dispatch
+	 *                         time.
 	 * @return LocalTime object representing the time of delivery.
 	 */
 	public LocalTime getDeliveryTime(OrderDetails order, LocalTime currDispatchTime) {
@@ -115,7 +118,8 @@ public class OrderScheduler {
 
 	/**
 	 * Calculate and Retrieve value of returnTime, i.e., the time of drone return.
-	 * @param order - OrderDetails object representing customer order.
+	 * 
+	 * @param order            - OrderDetails object representing customer order.
 	 * @param currDispatchTime - Earliest possible dispatch time.
 	 * @return LocalTime object representing time of drone return.
 	 */
@@ -124,34 +128,40 @@ public class OrderScheduler {
 		returnTime = currDispatchTime.plusMinutes(minutes);
 		return returnTime;
 	}
-	
+
 	/**
 	 * Retrieve value of currdispatchTime.
+	 * 
 	 * @return LocalTime object with earliest possible drone dispatch time.
 	 */
 	public LocalTime getCurrDispatchTime() {
 		return currDispatchTime;
 	}
-	
+
 	/**
 	 * Set the value of currDispatchTime
+	 * 
 	 * @param currDispatchTime - Earliest possible dispatch time.
 	 */
 	public void setCurrDispatchTime(LocalTime currDispatchTime) {
 		this.currDispatchTime = currDispatchTime;
 	}
-	
+
 	/**
 	 * Retrieve value of returnTime.
-	 * @return LocalTime object with value of drone return time after completing delivery.
+	 * 
+	 * @return LocalTime object with value of drone return time after completing
+	 *         delivery.
 	 */
 	public LocalTime getReturnTime() {
 		return returnTime;
 	}
-	
+
 	/**
 	 * Set the value of returnTime
-	 * @param returnTime - LocalTime object with value of drone return time after completing delivery.
+	 * 
+	 * @param returnTime - LocalTime object with value of drone return time after
+	 *                   completing delivery.
 	 */
 	public void setReturnTime(LocalTime returnTime) {
 		this.returnTime = returnTime;
