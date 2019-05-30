@@ -23,7 +23,7 @@ public class DeliveryScheduleOutPutFile {
 	 * 
 	 * @param outputFileName        - String for output file name.
 	 * @param NPS                   - Integer for final NPS.
-	 * @param processedOrderdetails - HashMap<orderID,dispatchTime> of all processed
+	 * @param processedOrderdetails - HashMap(orderID,dispatchTime) of all processed
 	 *                              orders
 	 * @throws FileNotFoundException - If the output file is not found or cannot be
 	 *                               created.
