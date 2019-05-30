@@ -67,8 +67,8 @@ and change the path to your system path in the second scenario.
  - There should be a recovery mechanism for drone such that how shall we recover if a drone breaks down in the middle of a delivery
  - A validation check should be there that if a order location is far away from range of one warehouse then it should be diverted to a nearer warehouse.
  - A check for duplicate order id should also be done.
- - The unprocessed order should be added in the rejected list and should be printed out along with the output file.As it would help to validate which orders have been rejected and ifpossible can be corrected.
- - If a we based system is developed then we can use selenium in addition to already present test tools.
+ - The unprocessed order should be added in the rejected list and should be printed out along with the output file.As it would help to validate which orders have been rejected and if possible can be corrected.
+ - If GUI based system is developed then we can use selenium in addition to already present test tools for testing the functionality.
  
  # Flow Diagram 
 ![image](https://user-images.githubusercontent.com/51058934/58605131-c7af3680-8264-11e9-9976-5df51f5bc7ad.png)
