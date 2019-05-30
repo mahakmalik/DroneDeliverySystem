@@ -6,6 +6,7 @@ import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
+		format = {"pretty", "json:target/Test"},
 		features = "Test\\com\\dds\\features",
 		glue = "com.dds.tests"
 		)
