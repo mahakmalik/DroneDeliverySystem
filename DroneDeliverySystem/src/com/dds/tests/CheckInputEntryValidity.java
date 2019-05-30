@@ -7,7 +7,7 @@ import com.dds.appcode.OrderFileProcessor;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-public class checkInputEntryValidity {
+public class CheckInputEntryValidity {
 	OrderFileProcessor op = new OrderFileProcessor();
 	
 	@When("^Input file contains corrupted data$")

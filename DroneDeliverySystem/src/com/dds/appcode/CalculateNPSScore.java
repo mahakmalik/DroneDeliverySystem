@@ -1,5 +1,4 @@
 package com.dds.appcode;
-import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.LinkedHashMap;
@@ -14,10 +13,10 @@ import com.dds.exceptions.FileNotFoundException;
 public class CalculateNPSScore {
 	
 	private static  LinkedHashMap<String,LocalTime> processedOrderDetails = new LinkedHashMap<String,LocalTime>();
-	private static int promotors;
-	private static int detractors;
-	private static int NPS;
-	private static int totalProcessedOrders;
+	public static int promotors;
+	public static int detractors;
+	public static int NPS;
+	public static int totalProcessedOrders;
 	
 	/**
 	 * Calculate NPS of individual orders.
@@ -31,7 +30,7 @@ public class CalculateNPSScore {
 		long timeElapsed = Duration.between(order.getOrderPlaceTime(),deliveryTime).toMinutes();
 		
 		if(timeElapsed <120){
-			setPromotors(getPromotors() + 1);			
+			promotors++;			
 		}
 		
 		if(timeElapsed >= 240){			
@@ -51,7 +50,7 @@ public class CalculateNPSScore {
 		if(totalProcessedOrders == 0){			
 			return 0;
 		}		
-		NPS = ((getPromotors() - detractors ) * 100) / totalProcessedOrders;		
+		NPS = ((promotors - detractors ) * 100) / totalProcessedOrders;		
 		return NPS;		
 	}
 	
@@ -69,20 +68,20 @@ public class CalculateNPSScore {
 		}
 	}
 	
-	/**
-	 * Retrieve value of promotors.
-	 * @return Integer with value of promotors.
-	 */
-	public static int getPromotors() {
-		return promotors;
-	}
-	
-	/**
-	 * Set value of promotors.
-	 * @param promotors - Integer value of promotors.
-	 */
-	public static void setPromotors(int promotors) {
-		CalculateNPSScore.promotors = promotors;
-	}	
+//	/**
+//	 * Retrieve value of promotors.
+//	 * @return Integer with value of promotors.
+//	 */
+//	public static int getPromotors() {
+//		return promotors;
+//	}
+//	
+//	/**
+//	 * Set value of promotors.
+//	 * @param promotors - Integer value of promotors.
+//	 */
+//	public static void setPromotors(int promotors) {
+//		CalculateNPSScore.promotors = promotors;
+//	}	
 	
 }

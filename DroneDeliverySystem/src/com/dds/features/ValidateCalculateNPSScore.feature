@@ -1,5 +1,7 @@
-Feature: Check to validate that 
+Feature: Check to validate that NPS Score is calculated correctly
 
-Scenario: Diferrent order entries consisting invalid of orderId location and time should not be processed
-         When Input file contains corrupted data
-         Then The method should return false
+Scenario: promotors and detractors are updated according to the dispatch time
+         When Order details and dispatch time are passed
+         Then The promoter should be incremented according to time elapsed
+         Then Or the detractor should be incremented according to time elapsed
+         And Total processedorder should be incremented

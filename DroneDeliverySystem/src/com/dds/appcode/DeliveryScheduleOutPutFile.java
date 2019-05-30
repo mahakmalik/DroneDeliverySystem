@@ -25,7 +25,7 @@ public class DeliveryScheduleOutPutFile {
 	 * @param NPS                   - Integer for final NPS.
 	 * @param processedOrderdetails - HashMap<orderID,dispatchTime> of all processed
 	 *                              orders
-	 * @throws FileNotFoundException - If the oputput file is not found or cannot be
+	 * @throws FileNotFoundException - If the output file is not found or cannot be
 	 *                               created.
 	 */
 	public void creatingOutPutFile(String outputFileName, int NPS,
@@ -59,6 +59,9 @@ public class DeliveryScheduleOutPutFile {
 		} finally {
 			if (writer != null) {
 				try {
+					CalculateNPSScore.NPS=0;
+					CalculateNPSScore.promotors=0;
+					CalculateNPSScore.detractors=0;
 					writer.close();
 				} catch (IOException e) {
 					e.printStackTrace();
