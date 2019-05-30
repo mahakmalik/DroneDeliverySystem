@@ -1,7 +1,8 @@
 ## DroneDeliverySystem
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
-
+Problem:- Design a Quality Assurance Test Plan for a system that manages drone-carried deliveries to
+customers in a small town.
 The DroneDeliverySystem is a java project build using Eclipse IDE. Drone Delivery System is a tool to decide the schedule of orders. The tool maximizes the Net Promoter Score. The tool generates the list of delivery time for each order such that we can deliver the maximum orders within an hour of order place time.
 The unit testing has been performed on the system using Cucumber and JUnit
 
