@@ -73,7 +73,6 @@ public class DeliveryScheduleOutPutFile {
 							e.printStackTrace();
 						}
 					}
-
 				}
 			}
 		}
