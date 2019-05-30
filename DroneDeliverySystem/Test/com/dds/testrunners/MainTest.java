@@ -6,7 +6,7 @@ import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features = "src\\com\\dds\\features",
+		features = "Test\\com\\dds\\features",
 		glue = "com.dds.tests"
 		)
 
