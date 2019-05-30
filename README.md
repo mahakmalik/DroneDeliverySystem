@@ -57,7 +57,7 @@ The unit testing has been performed on the system using Cucumber and JUnit
  - If a we based system is developed then we can use selenium in addition to already present test tools.
  
  # Flow Diagram 
- ![image](https://user-images.githubusercontent.com/51058934/58581855-7aa87180-821e-11e9-82c5-0747d1e3f671.png)
+![image](https://user-images.githubusercontent.com/51058934/58605131-c7af3680-8264-11e9-9976-5df51f5bc7ad.png)
 
 
 
