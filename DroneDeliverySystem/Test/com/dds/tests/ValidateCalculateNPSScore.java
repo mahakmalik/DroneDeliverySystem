@@ -32,6 +32,7 @@ public class ValidateCalculateNPSScore {
 	
 	@Then("^The promoter should be incremented according to time elapsed$")
 	public void validate_calculated_promoters() {
+	
 		Assert.assertEquals(4,CalculateNPSScore.promotors);		
 	}
 	
