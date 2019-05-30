@@ -10,6 +10,20 @@ The unit testing has been performed on the system using Cucumber and JUnit
 - use JRE 1.8
 - download jar files for Cucumber, Gherkin and JUnit 4
 
+ Steps to run the project in Eclipse:
+
+1) Go to the repository and copy the Clone URL
+2) Open Eclipse and select File -> Import
+3) In the import window select Git->Projects from Git->Clone URI
+4) Import as Existing Project
+5) One imported, right click on Project (DroneDeliverySystem) and select Build Path -> Configure Build Path
+6) Go to Source Tab and remove everything already there
+7) Click Add Folder and select Main and Test and click OK
+8) Now go to Libraries Tab and select Add External JARs...and add the provided JARs and click Apply and Close
+9) Now the application is ready to run
+10) One of the test cases which checks the valid path of the input file will fail unless you navigate to Test->com.dds.features.ValidateBufferedToArrayListMethod.feature 
+and change the path to your system path in the second scenario.
+
 # Tools
 - Programming Language : Java & Gherkin
   The reason for using java is that it is an object oriented lannguage and offers automatic garbage collection.
