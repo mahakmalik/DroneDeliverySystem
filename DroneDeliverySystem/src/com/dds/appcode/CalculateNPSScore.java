@@ -64,7 +64,7 @@ public class CalculateNPSScore {
 		DeliveryScheduleOutPutFile dsf = new DeliveryScheduleOutPutFile();
 		try {
 			dsf.creatingOutPutFile(MainClass.OUTPUT_FILE_PATH, NPS, processedOrderDetails) ;
-		} catch (IOException e) {
+		} catch (FileNotFoundException e) {
 			throw new FileNotFoundException("File not found!");
 		}
 	}
