@@ -66,22 +66,5 @@ public class CalculateNPSScore {
 		} catch (FileNotFoundException e) {
 			throw new FileNotFoundException("File not found!");
 		}
-	}
-	
-//	/**
-//	 * Retrieve value of promotors.
-//	 * @return Integer with value of promotors.
-//	 */
-//	public static int getPromotors() {
-//		return promotors;
-//	}
-//	
-//	/**
-//	 * Set value of promotors.
-//	 * @param promotors - Integer value of promotors.
-//	 */
-//	public static void setPromotors(int promotors) {
-//		CalculateNPSScore.promotors = promotors;
-//	}	
-	
+	}	
 }
